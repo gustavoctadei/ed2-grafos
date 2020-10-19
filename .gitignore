@@ -1,0 +1,12 @@
+# Ignorando as pastas que contém os arquivos compilados (CodeBlocks)
+bin/
+obj/
+
+# Ignorando arquivos binarios
+*.o
+*.exe
+
+# Ignorando os arquivos do DevC++
+*.dev
+*.layout
+*.win
