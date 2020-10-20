@@ -2,44 +2,70 @@
 #include <stdlib.h>
 #include "grafo.h"
 
+void imprime_vetor(int* visitado, int tamanho_vetor) {
+    int i;
+    for(i = 0; i < tamanho_vetor; i++) {
+        printf("V[%d] - %d\n", i, visitado[i]);
+    }
+    printf("\n");
+}
+
 int main() {
-    int numero_vertices = 5, eh_digrafo = 1, i;
-    Grafo* grafo = cria_grafo(5, 5, 0);
-    int *visitado = (int*) malloc(numero_vertices * sizeof(int));
+    //Abre o arquivo texto
+    FILE *f = fopen("grafo.txt", "r");
+    
+    //Cria o Grafo baseado no arquivo texto
+    Grafo* grafo;
 
-    //Criando o grafo
-    insere_aresta(grafo, 0, 1, eh_digrafo, 0);
-    insere_aresta(grafo, 1, 3, eh_digrafo, 0);
-    insere_aresta(grafo, 1, 2, eh_digrafo, 0);
-    insere_aresta(grafo, 2, 4, eh_digrafo, 0);
-    insere_aresta(grafo, 3, 0, eh_digrafo, 0);
-    insere_aresta(grafo, 3, 4, eh_digrafo, 0);
-    insere_aresta(grafo, 4, 1, eh_digrafo, 0);
+    //Cria as variáveis de interface com o usuário
+    int opcao, vertice;
 
-    imprime_grafo(grafo);
+    do {
+        printf("1 - Carregar o Grafo do Arquivo Texto\n");
+        printf("2 - Imprime o Grafo\n");
+        printf("3 - Busca em Largura (BFS)\n");
+        printf("4 - Busca em Profundidade (DFS)\n");
+        printf("5 - Arvore Geradora Minima (Algoritmo de Prim)\n");
+        printf("6 - Arvore Geradora Minima (Algoritmo de Kruskal)\n");
+        printf("7 - Caminhos Minimos - Busca em Largura (BFS)\n");
+        printf("8 - Caminhos Minimos - Dijkstra\n");
+        printf("9 - Caminhos Minimos - Floyd Warshall\n");
+        printf("10 - Limpar o Grafo da Memoria e Sair\n");
+        printf("Digite a Opcao: ");
+        scanf("%d", &opcao);
 
+        switch(opcao) {
+            case 1:
+                grafo = cria_grafo(f);
+                //Cria o Vetor que armazena a ordem de visitas
+                int *visitado = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                printf("\n\n");
+                break;
 
-    //Realizar a busca em profundidade aqui
-    //busca_profundidade_grafo(grafo, 0, visitado);
+            case 2:
+                imprime_grafo(grafo);
+                break;
 
-    //Imprimindo o vetor que guarda a ordem de visita
-    //for(i = 0; i < 5; i++) {
-    //    printf("V[%d] - %d\n", i, visitado[i]);
-    //}
+            case 3:
+                printf("Digite o Vertice Inicial: ");
+                scanf("%d", &vertice);
+                busca_largura_grafo(grafo, vertice, visitado);
+                imprime_vetor(visitado, numero_vertices(grafo));
+                break;
 
-    ////////////////////////////////////////////////////////
+            case 4:
+                printf("Digite o Vertice Inicial: ");
+                scanf("%d", &vertice);
+                busca_profundidade_grafo(grafo, vertice, visitado);
+                imprime_vetor(visitado, numero_vertices(grafo));
+                break;
 
-    //Realizar a busca em largura
-    //busca_largura_grafo(grafo, 0, visitado);
+            case 10:
+                libera_grafo(grafo);
+                printf("Saindo...\n");
+        }
 
-    //Imprimindo o vetor que guarda a ordem de visita
-    //for(i = 0; i < 5; i++) {
-    //    printf("V[%d] - %d\n", i, visitado[i]);
-    //}
+    } while(opcao != 10);
 
-    //Liberando o Grafo
-    libera_grafo(grafo);
-
-    system("pause");
     return 0;
 }
