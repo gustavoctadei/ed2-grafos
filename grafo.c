@@ -92,7 +92,9 @@ int insere_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo, float p
     grafo->grau[origem]++; //Incrementa o valor do Grau do Vértice de Origem
 
     //Se não for dígrafo, insere a aresta inversa
-    insere_aresta(grafo, destino, origem, 1, peso);
+    if(eh_digrafo == 0){
+        insere_aresta(grafo, destino, origem, 1, peso);
+    }
 
     //Caso tenha inserido com sucesso, retorna 1
     return 1;
@@ -135,4 +137,34 @@ int remove_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo) {
 
     //Caso a remoção tenha ocorrido com sucesso, retorna 1
     return 1;
+}
+
+//Funções de Busca
+
+//Função auxiliar para Busca em Profundidade
+void busca_profundidade(Grafo *grafo, int inicio, int *visitado, int cont) {
+    int i;
+    visitado[inicio] = cont; //Marca o vértice inicial como visitado
+
+    //Verifica se cada vizinho do Vértice inicio já foi visitado
+    for(i = 0; i < grafo->grau[inicio]; i++) {
+        if( !visitado[grafo->arestas[inicio][i]] ) { //Caso não tenha sido visitado, a função de Busca em Profundidade é chamada e o contador de visitação é incrementado
+            busca_profundidade(grafo, grafo->arestas[inicio][i], visitado, cont+1);
+        }
+    }
+    //Ao fim, temos o vetor visitado que contém a ordem em que cada vértice foi visitado
+}
+
+//Função principal para Busca em Profundidade
+void busca_profundidade_grafo(Grafo *grafo, int inicio, int *visitado) {
+    int i, cont = 1;
+
+    //Array que armazena a ordem em que cada vértice será visitado
+    //Marca todos os vértices como não visitados
+    for(i = 0; i < grafo->numero_vertices; i++) {
+        visitado[i] = 0;
+    }
+
+    //Chama a função de busca em profundidade para o Vértice Inicial
+    busca_profundidade(grafo, inicio, visitado, cont);
 }

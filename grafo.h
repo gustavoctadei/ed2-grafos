@@ -5,3 +5,6 @@ void libera_grafo(Grafo* grafo);
 
 int insere_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo, float peso);
 int remove_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo);
+
+//Funções de Busca
+void busca_profundidade_grafo(Grafo *grafo, int inicio, int *visitado);
