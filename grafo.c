@@ -68,3 +68,32 @@ void libera_grafo(Grafo* grafo) {
         free(grafo);
     }
 }
+
+int insere_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo, float peso) {
+    //Se o Ponteiro para o Grafo, o Vértice de Origem ou Vértice de Destino forem inválidos, retorna 0
+    if(grafo == NULL) {
+        return 0;
+    }
+
+    if(origem < 0 || origem >= grafo->numero_vertices) {
+        return 0;
+    }
+
+    if(destino < 0 || destino >= grafo->numero_vertices) {
+        return 0;
+    }
+
+    grafo->arestas[origem][grafo->grau[origem]] = destino; //Insere o vértice de destino ao final da lista de adjacências do vértice de origem
+    
+    //Caso o grafo seja ponderado, insere o peso da aresta
+    if(grafo -> eh_ponderado) {
+        grafo->pesos[origem][grafo->grau[origem]] = peso;
+    }
+    grafo->grau[origem]++; //Incrementa o valor do Grau do Vértice de Origem
+
+    //Se não for dígrafo, insere a aresta inversa
+    insere_aresta(grafo, destino, origem, 1, peso);
+
+    //Caso tenha inserido com sucesso, retorna 1
+    return 1;
+}
