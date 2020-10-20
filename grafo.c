@@ -45,3 +45,26 @@ Grafo* cria_grafo(int numero_vertices, int grau_maximo, int eh_ponderado) {
 
     return grafo;
 }
+
+void libera_grafo(Grafo* grafo) {
+    //Verifica se o ponteiro está, de fato, apontando para o grafo na memória
+    if(grafo != NULL) {
+        int i;
+
+        for(i = 0; i < grafo->numero_vertices; i++) {
+            free(grafo->arestas[i]); //Libera a lista de adjacências de cada vértice
+        }
+        free(grafo->arestas); //Libera a lista de vértices
+
+        //Verifica se o grafo é ponderado. Caso sim, libera a estrutura que armazena os pesos das arestas
+        if(grafo->eh_ponderado) {
+            for(i = 0; i < grafo->numero_vertices; i++) {
+                free(grafo->pesos[i]);
+            }
+            free(grafo->pesos);
+        }
+
+        free(grafo->grau); //Libera a lista que armazena o grau de cada vértice
+        free(grafo);
+    }
+}
