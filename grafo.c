@@ -139,6 +139,29 @@ int remove_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo) {
     return 1;
 }
 
+// Percorre e imprime todo o grafo
+void imprime_grafo(Grafo *grafo) {
+    if(grafo == NULL) {
+        return;
+    }
+
+    int i, j;
+
+    for(i = 0; i < grafo->numero_vertices; i++) {
+        printf ("%d: ", i);
+
+        for(j = 0; j < grafo->grau[i]; j++) {
+            if(grafo->eh_ponderado) {
+                printf("%d (%.2f), ", grafo->arestas[i][j], grafo->pesos[i][j]);
+            }
+            else {
+                printf("%d, ", grafo->arestas[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
 //Funções de Busca
 
 //Função auxiliar para Busca em Profundidade
