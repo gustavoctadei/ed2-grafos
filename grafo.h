@@ -8,3 +8,4 @@ int remove_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo);
 
 //Funções de Busca
 void busca_profundidade_grafo(Grafo *grafo, int inicio, int *visitado);
+void busca_largura_grafo(Grafo *grafo, int inicio, int *visitado);

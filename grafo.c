@@ -168,3 +168,42 @@ void busca_profundidade_grafo(Grafo *grafo, int inicio, int *visitado) {
     //Chama a função de busca em profundidade para o Vértice Inicial
     busca_profundidade(grafo, inicio, visitado, cont);
 }
+
+//Função para Busca em Largura
+void busca_largura_grafo(Grafo *grafo, int inicio, int *visitado) {
+    int i, vertice, numero_vertices, cont = 1;
+    int *fila, inicio_fila = 0, fim_fila = 0;
+
+    //Marca todos os Vértices como não visitados
+    for(i = 0; i < grafo->numero_vertices; i++) {
+        visitado[i] = 0;
+    }
+
+    numero_vertices = grafo->numero_vertices;
+    fila = (int*) malloc(numero_vertices * sizeof(int) ); //Aloca a fila para controlar de visitação
+
+    fim_fila++;
+    fila[fim_fila] = inicio; //Coloca o Vértice inicial no fim da fila
+    visitado[inicio] = cont; //Marca a ordem de visitação do vértice inicio
+
+    //Inicia a busca enquanto houver vértices na fila
+    while(inicio_fila != fim_fila) {
+        //Remove um vértice da fila e incrementa o contador de visitação
+        inicio_fila = (inicio_fila + 1) % numero_vertices;
+        vertice = fila[inicio_fila];
+        cont++;
+
+        //Para cada vizinho de vertice
+        for(i = 0; i < grafo->grau[vertice]; i++) {
+            //Verifica se o vizinho de vertice já foi visitado
+            if( !visitado[grafo->arestas[vertice][i]] ) {
+                //Caso não tenha sido visitado, é inserido no final da fila e marcado como visitado (na ordem)
+                fim_fila = (fim_fila + 1) % numero_vertices;
+                fila[fim_fila] = grafo->arestas[vertice][i];
+                visitado[grafo->arestas[vertice][i]] = cont;
+            }
+        }
+    }
+
+    free(fila);
+}
