@@ -97,3 +97,42 @@ int insere_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo, float p
     //Caso tenha inserido com sucesso, retorna 1
     return 1;
 }
+
+int remove_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo) {
+    //Se o Ponteiro para o Grafo, o Vértice de Origem ou Vértice de Destino forem inválidos, retorna 0
+    if(grafo == NULL) {
+        return 0;
+    }
+
+    if(origem < 0 || origem >= grafo->numero_vertices) {
+        return 0;
+    }
+
+    if(destino < 0 || destino >= grafo->numero_vertices) {
+        return 0;
+    }
+
+    int i = 0;
+
+    //Procura a aresta na lista de adjacências do Vértice de Destino
+    while(i < grafo->grau[origem] && grafo->arestas[origem][i] != destino) {
+        if(i == grafo->grau[origem]) { //Se percorreu toda a lista de adjacências do vértice de Origem, elemento não encontrado
+            return 0;
+        }
+    }
+
+    grafo->grau[origem]--; //Decrementa o Grau do Vértice de Origem
+    grafo->arestas[origem][i] = grafo->arestas[origem][grafo->grau[origem]]; //Copia a última aresta para a posição que foi removida da lista de adjacências da Origem
+
+    if(grafo->eh_ponderado) {
+        grafo->pesos[origem][i] = grafo->pesos[origem][grafo->grau[origem]]; //Copia o peso da última aresta para a posição que foi removida da lista de Pesos da aresta
+    }
+
+    //Se não for Dígrafo, remove a aresta inversa
+    if(eh_digrafo == 0) {
+        remove_aresta(grafo, destino, origem, 1);
+    }
+
+    //Caso a remoção tenha ocorrido com sucesso, retorna 1
+    return 1;
+}
