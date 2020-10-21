@@ -254,6 +254,6 @@ void busca_largura_grafo(Grafo *grafo, int inicio, int *visitado) {
     free(fila);
 }
 
-int numero_vertices(Grafo *grafo){
+int numero_vertices(Grafo *grafo) {
     return grafo->numero_vertices;
 }
