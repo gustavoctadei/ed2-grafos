@@ -11,3 +11,5 @@ void busca_largura_grafo(Grafo *grafo, int inicio, int *visitado);
 
 //Função Principal para Menor Caminho entre dois Vértices utilizando o Algoritmo de Dijkstra
 void menor_caminho_grafo_dijkstra(Grafo *grafo, int inicial, int *antecessor, float *distancia);
+//Função Principal para Menor Caminho entre dois Vértices utilizando o Algoritmo de Floyd Warshall
+void menor_caminho_grafo_floyd_warshall(Grafo *grafo);

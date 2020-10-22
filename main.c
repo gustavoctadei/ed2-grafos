@@ -75,6 +75,10 @@ int main() {
                 imprime_vetor_float(distancia, numero_vertices(grafo));
                 break;
 
+            case 9:
+                menor_caminho_grafo_floyd_warshall(grafo);
+                break;
+
             case 10:
                 libera_grafo(grafo);
                 printf("Saindo...\n");

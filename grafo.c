@@ -330,3 +330,33 @@ void menor_caminho_grafo_dijkstra(Grafo *grafo, int inicial, int *antecessor, fl
     
     free(visitado);
 }
+
+void menor_caminho_grafo_floyd_warshall(Grafo *grafo) {
+    int numero_vertices = grafo->numero_vertices;
+    int distancias[numero_vertices][numero_vertices], i, j, k;
+
+    for(i = 0; i < numero_vertices; i++) {
+        for(j = 0; j < numero_vertices; j++) {
+            distancias[i][j] = grafo->arestas[i][j];
+        }
+    }
+
+    for(k = 0; k < numero_vertices; k++) {
+        for(i = 0; i < numero_vertices; i++) {
+            for(j = 0; j < numero_vertices; j++) {
+                if (distancias[i][k] + distancias[k][j] < distancias[i][j]) {
+                    distancias[i][j] = distancias[i][k] + distancias[k][j];
+                }
+            }
+        }
+    }
+
+    for(i = 0; i < numero_vertices; i++) {
+        for(j = 0; j < numero_vertices; j++) {
+            printf("[%d][%d] - %d | ", i, j, distancias[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\n\n");
+}
