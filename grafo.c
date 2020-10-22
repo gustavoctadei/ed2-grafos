@@ -44,13 +44,16 @@ int insere_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo, float p
     return 1;
 }
 
-Grafo* cria_grafo(FILE* f) {
-    int numero_vertices, grau_maximo, eh_ponderado;
-
+//Grafo* cria_grafo(FILE* f) {
+Grafo* cria_grafo() {
+    FILE *f = fopen("grafo.txt", "r");
+    
     if(f == NULL) {
         return 0;
     }
     
+    int numero_vertices, grau_maximo, eh_ponderado;
+
     //Lê do arquivo texto o numero de vértices, grau máximo e se o grafo é ponderado
     fscanf(f, "%d, %d, %d\n", &numero_vertices, &grau_maximo, &eh_ponderado);
 
@@ -94,7 +97,8 @@ Grafo* cria_grafo(FILE* f) {
             insere_aresta(grafo, origem, destino, eh_digrafo, peso); //Insere a aresta com as informações contidas no arquivo texto
         }
     }
-
+    
+    fclose(f);
     return grafo;
 }
 
@@ -256,4 +260,74 @@ void busca_largura_grafo(Grafo *grafo, int inicio, int *visitado) {
 
 int numero_vertices(Grafo *grafo) {
     return grafo->numero_vertices;
+}
+
+//Função Auxiliar para Menor Caminho entre dois Vértices utilizando o Algoritmo de Dijkstra
+int procura_menor_distancia(float *distancia, int *visitado, int numero_vertices) {
+    int i, menor = -1, primeiro = 1;
+
+    for(i = 0; i < numero_vertices; i++) {
+        if(distancia[i] >= 0 && visitado[i] == 0) { //Verifica se a distância[i] é não-negativa e se o vértice não foi visitado
+            if(primeiro) { //Se for o primeiro, considera como menor distância até então
+                menor = i;
+                primeiro = 0;
+            }
+            else {
+                if(distancia[menor] > distancia[i]) { //Verifica se a distância atual é menor que a distância atualmente marcada como menor
+                    menor = i; //Se for, menor recebe o índice da menor distância
+                }
+            }
+        }
+    }
+
+    return menor;
+}
+
+//Função Principal para Menor Caminho entre dois Vértices utilizando o Algoritmo de Dijkstra
+void menor_caminho_grafo(Grafo *grafo, int inicial, int *antecessor, float *distancia) {
+    int i, cont, numero_vertices, indice, *visitado, vertice;
+    cont = numero_vertices = grafo->numero_vertices;
+    visitado = (int*) malloc(numero_vertices * sizeof(int));
+
+    //Marcando todos os vértices como não possuindo antecessor, distância de -1 e não-visitados
+    for(i = 0; i < numero_vertices; i++) {
+        antecessor[i] = -1;
+        distancia[i] = -1;
+        visitado[i] = 0;
+    }
+
+    distancia[inicial] = 0; //A distância do vértice inicial para ele mesmo é igual a 0
+
+    while(cont > 0) {
+        vertice = procura_menor_distancia(distancia, visitado, numero_vertices); //Procura o vértice com menor distância que ainda não foi visitado
+
+        //Caso o índice do vértice seja inválido, encerra a busca
+        if(vertice == -1) {
+            break;
+        }
+
+        //Marca o Vértice como visitado e diminui o número de vértices a serem visitados
+        visitado[vertice] = 1;
+        cont--;
+
+        //Para cada vizinho de vertice
+        for(i = 0; i < grafo->grau[vertice]; i++) {
+            indice = grafo->arestas[vertice][i];
+
+            //Caso a distância até ele for negativa, a distância passa a ser a distância de vertice + 1 e vertice se torna o antecessor
+            if(distancia[indice] < 0) {
+                distancia[indice] = distancia[vertice] + 1;
+                antecessor[indice] = vertice;
+            }
+            else {
+                //Verifica se a distância de vertice + 1 é menor do que a distância atual
+                if(distancia[indice] > distancia[vertice] + 1) {
+                    distancia[indice] = distancia[vertice] + 1;
+                    antecessor[indice] = vertice;
+                }
+            }
+        }
+    }
+    
+    free(visitado);
 }

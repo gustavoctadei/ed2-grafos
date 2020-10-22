@@ -2,19 +2,23 @@
 #include <stdlib.h>
 #include "grafo.h"
 
-void imprime_vetor(int* visitado, int tamanho_vetor) {
+void imprime_vetor_inteiro(int* vetor, int tamanho_vetor) {
     int i;
     for(i = 0; i < tamanho_vetor; i++) {
-        printf("V[%d] - %d\n", i, visitado[i]);
+        printf("V[%d] - %d\n", i, vetor[i]);
+    }
+    printf("\n");
+}
+
+void imprime_vetor_float(float* vetor, int tamanho_vetor) {
+    int i;
+    for(i = 0; i < tamanho_vetor; i++) {
+        printf("V[%d] - %f\n", i, vetor[i]);
     }
     printf("\n");
 }
 
 int main() {
-    //Abre o arquivo texto
-    FILE *f = fopen("grafo.txt", "r");
-    
-    //Cria o Grafo baseado no arquivo texto
     Grafo* grafo;
 
     //Cria as variáveis de interface com o usuário
@@ -36,7 +40,7 @@ int main() {
 
         switch(opcao) {
             case 1:
-                grafo = cria_grafo(f);
+                grafo = cria_grafo();
                 //Cria o Vetor que armazena a ordem de visitas
                 int *visitado = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
                 printf("\n\n");
@@ -50,14 +54,24 @@ int main() {
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
                 busca_largura_grafo(grafo, vertice, visitado);
-                imprime_vetor(visitado, numero_vertices(grafo));
+                imprime_vetor_inteiro(visitado, numero_vertices(grafo));
                 break;
 
             case 4:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
                 busca_profundidade_grafo(grafo, vertice, visitado);
-                imprime_vetor(visitado, numero_vertices(grafo));
+                imprime_vetor_inteiro(visitado, numero_vertices(grafo));
+                break;
+
+            case 8:
+                printf("Digite o Vertice Inicial: ");
+                scanf("%d", &vertice);
+                int *antecessor = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                float *distancia = (float*) malloc( numero_vertices(grafo) * sizeof(float) );
+                menor_caminho_grafo(grafo, vertice, antecessor, distancia);
+                imprime_vetor_inteiro(antecessor, numero_vertices(grafo));
+                imprime_vetor_float(distancia, numero_vertices(grafo));
                 break;
 
             case 10:
