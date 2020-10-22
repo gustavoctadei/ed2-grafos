@@ -44,7 +44,6 @@ int insere_aresta(Grafo* grafo, int origem, int destino, int eh_digrafo, float p
     return 1;
 }
 
-//Grafo* cria_grafo(FILE* f) {
 Grafo* cria_grafo() {
     FILE *f = fopen("grafo.txt", "r");
     

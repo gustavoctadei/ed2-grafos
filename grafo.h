@@ -1,6 +1,5 @@
 typedef struct grafo Grafo;
 
-//Grafo* cria_grafo(FILE* f);
 Grafo* cria_grafo();
 void libera_grafo(Grafo* grafo);
 void imprime_grafo(Grafo *grafo);

@@ -19,6 +19,7 @@ void imprime_vetor_float(float* vetor, int tamanho_vetor) {
 }
 
 int main() {
+    //Cria a variavel do Grafo
     Grafo* grafo;
 
     //Cria as variáveis de interface com o usuário
