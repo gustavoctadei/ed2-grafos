@@ -70,7 +70,7 @@ int main() {
                 scanf("%d", &vertice);
                 int *antecessor = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
                 float *distancia = (float*) malloc( numero_vertices(grafo) * sizeof(float) );
-                menor_caminho_grafo(grafo, vertice, antecessor, distancia);
+                menor_caminho_grafo_dijkstra(grafo, vertice, antecessor, distancia);
                 imprime_vetor_inteiro(antecessor, numero_vertices(grafo));
                 imprime_vetor_float(distancia, numero_vertices(grafo));
                 break;

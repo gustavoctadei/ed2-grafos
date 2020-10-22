@@ -262,7 +262,7 @@ int numero_vertices(Grafo *grafo) {
 }
 
 //Função Auxiliar para Menor Caminho entre dois Vértices utilizando o Algoritmo de Dijkstra
-int procura_menor_distancia(float *distancia, int *visitado, int numero_vertices) {
+int procura_menor_distancia_dijkstra(float *distancia, int *visitado, int numero_vertices) {
     int i, menor = -1, primeiro = 1;
 
     for(i = 0; i < numero_vertices; i++) {
@@ -283,7 +283,7 @@ int procura_menor_distancia(float *distancia, int *visitado, int numero_vertices
 }
 
 //Função Principal para Menor Caminho entre dois Vértices utilizando o Algoritmo de Dijkstra
-void menor_caminho_grafo(Grafo *grafo, int inicial, int *antecessor, float *distancia) {
+void menor_caminho_grafo_dijkstra(Grafo *grafo, int inicial, int *antecessor, float *distancia) {
     int i, cont, numero_vertices, indice, *visitado, vertice;
     cont = numero_vertices = grafo->numero_vertices;
     visitado = (int*) malloc(numero_vertices * sizeof(int));
@@ -298,7 +298,7 @@ void menor_caminho_grafo(Grafo *grafo, int inicial, int *antecessor, float *dist
     distancia[inicial] = 0; //A distância do vértice inicial para ele mesmo é igual a 0
 
     while(cont > 0) {
-        vertice = procura_menor_distancia(distancia, visitado, numero_vertices); //Procura o vértice com menor distância que ainda não foi visitado
+        vertice = procura_menor_distancia_dijkstra(distancia, visitado, numero_vertices); //Procura o vértice com menor distância que ainda não foi visitado
 
         //Caso o índice do vértice seja inválido, encerra a busca
         if(vertice == -1) {
