@@ -65,6 +65,14 @@ int main() {
                 imprime_vetor_inteiro(visitado, numero_vertices(grafo));
                 break;
 
+            case 5:
+                printf("Digite o Vertice Inicial: ");
+                scanf("%d", &vertice);
+                int *pai = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                arvore_geradora_minima_prim(grafo, vertice, pai);
+                imprime_vetor_inteiro(pai, numero_vertices(grafo));
+                break;
+
             case 8:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);

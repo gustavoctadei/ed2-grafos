@@ -360,3 +360,60 @@ void menor_caminho_grafo_floyd_warshall(Grafo *grafo) {
 
     printf("\n\n");
 }
+
+//Arvore Geradora Minima - Algoritmo de Prim
+void arvore_geradora_minima_prim(Grafo *grafo, int origem, int *pai) {
+    int i, j, destino, numero_vertices, primeiro;
+    double menor_peso;
+    numero_vertices = grafo->numero_vertices;
+
+    //Inicialmente marcando todos os vértices como sem pai
+    for(i = 0; i < numero_vertices; i++) {
+        pai[i] = -1;
+    }
+
+    //O pai do vértice de origem como ele mesmo
+    pai[origem] = origem;
+
+    //Enquanto for possível achar um vértice sem pai
+    while(1) {
+        primeiro = 1;
+        //Para todos os vértices
+        for(i = 0; i < numero_vertices; i++) {
+            //Verifica se já possui pai
+            if(pai[i] != -1) {
+                //Caso sim, percorrer suas arestas procurando vértices vizinhos
+                for(j = 0; j < grafo->grau[i]; j++) {
+                    //Verifica se o vizinho possui pai
+                    if(pai[grafo->arestas[i][j]] == -1) {
+                        //Caso seja o primeiro vértice que não possui pai
+                        if(primeiro) {
+                            //Considera este como tendo o menor peso
+                            menor_peso = grafo->pesos[i][j];
+                            //Guarda os vértices de origem e de destino
+                            origem = i;
+                            destino = grafo->arestas[i][j];
+                            //Já não é mais o primeiro
+                            primeiro = 0;
+                        }
+                        //Caso não seja o primeiro vértice que não possui pai
+                        else {
+                            //Verifica se o peso da aresta é menor do que a da aresta atual
+                            if(menor_peso > grafo->pesos[i][j]) {
+                                //Caso sim, guardar a aresta e os vértices de origem e de destino
+                                menor_peso = grafo->pesos[i][j];
+                                origem = i;
+                                destino = grafo->arestas[i][j];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //Verifica se foi possivel encontrar uma aresta de menor peso
+        if(primeiro == 1) {
+            break;
+        }
+        pai[destino] = origem;
+    }
+}
