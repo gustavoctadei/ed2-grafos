@@ -73,6 +73,16 @@ int main() {
                 imprime_vetor_inteiro(pai, numero_vertices(grafo));
                 break;
 
+            case 6:
+                printf("Digite o Vertice Inicial: ");
+                scanf("%d", &vertice);
+                int *pai_kruskal = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                int *arvore = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                arvore_geradora_minima_kruskal(grafo, vertice, pai_kruskal, arvore);
+                imprime_vetor_inteiro(pai_kruskal, numero_vertices(grafo));
+                imprime_vetor_inteiro(arvore, numero_vertices(grafo));
+                break;
+
             case 8:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);

@@ -417,3 +417,70 @@ void arvore_geradora_minima_prim(Grafo *grafo, int origem, int *pai) {
         pai[destino] = origem;
     }
 }
+
+//Arvore Geradora Minima - Algoritmo de Kruskal
+void arvore_geradora_minima_kruskal(Grafo *grafo, int origem, int *pai, int *arvore) {
+    int i, j, destino, numero_vertices, primeiro;
+    double menor_peso;
+
+    numero_vertices = grafo->numero_vertices;
+
+    //Marca todos os vertices como sem pai
+    for(i = 0; i < numero_vertices; i++) {
+        arvore[i] = i;
+        pai[i] = -1;
+    }
+
+    //Marca o pai do vértice de origem como ele mesmo
+    pai[origem] = origem;
+
+    //Enquanto for possível achar uma aresta ligando dois vértices de árvores diferentes
+    while(1) {
+        primeiro = 1;
+
+        //Para cada vértice, percorrer suas arestas procurando por vértices vizinhos de outra árvore
+        for(i = 0; i < numero_vertices; i++) {
+            for(j = 0; j < grafo->grau[i]; j++) {
+                //Caso seja a primeira aresta encontrada, considera como a de menor peso e guarda seus vértices de origem e destino
+                if(arvore[i] != arvore[ grafo->arestas[i][j] ]) {
+                    if(primeiro) {
+                        menor_peso = grafo->arestas[i][j];
+                        origem = i;
+                        destino = grafo->arestas[i][j];
+                        primeiro = 0;
+                    }
+                    //Caso não seja a primeira aresta encontrada, verifica se o menor peso atual é maior do que a aresta que está sendo verificada.
+                    else {
+                        //Caso sim, considera a aresta que está sendo verificada como a de menor peso e guarda seus vértices de origem e destino
+                        if(menor_peso > grafo->pesos[i][j]) {
+                            menor_peso = grafo->pesos[i][j];
+                            origem = i;
+                            destino = grafo->arestas[i][j];
+                        }
+                    }
+
+                }
+            }
+        }
+
+        //Verifica se foi possivel achar uma aresta de menor peso. Caso não, encerra a execução
+        if(primeiro == 1) {
+            break;
+        }
+
+        //Define o vértice destino como pai do vértice de origem caso o de origem não tenha pai
+        if(pai[origem] == -1) {
+            pai[origem] = destino;
+        }
+        else {
+            pai[destino] = origem;
+        }
+
+        for(i = 0; i < numero_vertices; i++) {
+            if(arvore[i] == arvore[destino]) {
+                arvore[i] = arvore[origem];
+            }
+        }
+    }
+
+}

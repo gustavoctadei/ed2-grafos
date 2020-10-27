@@ -17,3 +17,6 @@ void menor_caminho_grafo_floyd_warshall(Grafo *grafo);
 
 //Arvore Geradora Minima - Algoritmo de Prim
 void arvore_geradora_minima_prim(Grafo *grafo, int origem, int *pai);
+
+//Arvore Geradora Minima - Algoritmo de Kruskal
+void arvore_geradora_minima_kruskal(Grafo *grafo, int origem, int *pai, int *arvore);
