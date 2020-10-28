@@ -119,6 +119,11 @@ int main() {
                 free(antecessor);
                 free(distancia);
                 printf("Saindo...\n");
+                break;
+
+            default:
+                printf("Opcao Invalida. Tente novamente.\n");
+                break;
         }
 
     } while(opcao != 10);
