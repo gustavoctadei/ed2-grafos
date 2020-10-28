@@ -42,8 +42,12 @@ int main() {
         switch(opcao) {
             case 1:
                 grafo = cria_grafo();
-                //Cria o Vetor que armazena a ordem de visitas
+                //Cria os vetores auxiliares para as funcoes do programa
                 int *visitado = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                int *pai = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                int *arvore = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                int *antecessor = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
+                float *distancia = (float*) malloc( numero_vertices(grafo) * sizeof(float) );
                 printf("\n\n");
                 break;
 
@@ -68,7 +72,6 @@ int main() {
             case 5:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
-                int *pai = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
                 arvore_geradora_minima_prim(grafo, vertice, pai);
                 imprime_vetor_inteiro(pai, numero_vertices(grafo));
                 break;
@@ -76,18 +79,18 @@ int main() {
             case 6:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
-                int *pai_kruskal = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
-                int *arvore = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
-                arvore_geradora_minima_kruskal(grafo, vertice, pai_kruskal, arvore);
-                imprime_vetor_inteiro(pai_kruskal, numero_vertices(grafo));
+                arvore_geradora_minima_kruskal(grafo, vertice, pai, arvore);
+                imprime_vetor_inteiro(pai, numero_vertices(grafo));
                 imprime_vetor_inteiro(arvore, numero_vertices(grafo));
+                break;
+
+            case 7:
+                //Implementar
                 break;
 
             case 8:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
-                int *antecessor = (int*) malloc( numero_vertices(grafo) * sizeof(int) );
-                float *distancia = (float*) malloc( numero_vertices(grafo) * sizeof(float) );
                 menor_caminho_grafo_dijkstra(grafo, vertice, antecessor, distancia);
                 imprime_vetor_inteiro(antecessor, numero_vertices(grafo));
                 imprime_vetor_float(distancia, numero_vertices(grafo));
@@ -99,6 +102,12 @@ int main() {
 
             case 10:
                 libera_grafo(grafo);
+                //Libera da memoria os vetores auxiliares
+                free(visitado);
+                free(pai);
+                free(arvore);
+                free(antecessor);
+                free(distancia);
                 printf("Saindo...\n");
         }
 
