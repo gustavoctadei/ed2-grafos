@@ -40,6 +40,7 @@ int main() {
         scanf("%d", &opcao);
 
         switch(opcao) {
+            //1 - Carregar o Grafo do Arquivo Texto
             case 1:
                 grafo = cria_grafo();
                 //Cria os vetores auxiliares para as funcoes do programa
@@ -51,10 +52,12 @@ int main() {
                 printf("\n\n");
                 break;
 
+            //2 - Imprime o Grafo
             case 2:
                 imprime_grafo(grafo);
                 break;
 
+            //3 - Busca em Largura (BFS)
             case 3:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
@@ -62,6 +65,7 @@ int main() {
                 imprime_vetor_inteiro(visitado, numero_vertices(grafo));
                 break;
 
+            //4 - Busca em Profundidade (DFS)
             case 4:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
@@ -69,6 +73,7 @@ int main() {
                 imprime_vetor_inteiro(visitado, numero_vertices(grafo));
                 break;
 
+            //5 - Arvore Geradora Minima (Algoritmo de Prim)
             case 5:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
@@ -76,6 +81,7 @@ int main() {
                 imprime_vetor_inteiro(pai, numero_vertices(grafo));
                 break;
 
+            //6 - Arvore Geradora Minima (Algoritmo de Kruskal)
             case 6:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
@@ -84,10 +90,12 @@ int main() {
                 imprime_vetor_inteiro(arvore, numero_vertices(grafo));
                 break;
 
+            //7 - Caminhos Minimos - Busca em Largura (BFS)
             case 7:
                 //Implementar
                 break;
 
+            //8 - Caminhos Minimos - Dijkstra
             case 8:
                 printf("Digite o Vertice Inicial: ");
                 scanf("%d", &vertice);
@@ -96,10 +104,12 @@ int main() {
                 imprime_vetor_float(distancia, numero_vertices(grafo));
                 break;
 
+            //9 - Caminhos Minimos - Floyd Warshall
             case 9:
                 menor_caminho_grafo_floyd_warshall(grafo);
                 break;
 
+            //10 - Limpar o Grafo da Memoria e Sair
             case 10:
                 libera_grafo(grafo);
                 //Libera da memoria os vetores auxiliares
